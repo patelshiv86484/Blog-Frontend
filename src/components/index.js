@@ -6,11 +6,11 @@ import Logo from "./logo.jsx"
 import Logoutbtn from "./header/Logoutbtn.jsx";
 import RTE from './RTE.jsx'
 import Signup from "./signup.jsx";
-import Login from "./Login";
+import Login from "./login.jsx";
 import Button from "./btn";
 import PostForm from "./post-form/postForm";
 import PostCard from "./PostCard";
-import AuthLayout from "./AuthLayout";
+import AuthLayout from "./authlayout";
 import Input from "./input";
 export {
     Header,
