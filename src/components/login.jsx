@@ -11,9 +11,10 @@ function Login() {
     const navigate=useNavigate();
     const dispatch=useDispatch();
     const {register,handleSubmit}=useForm();//instead of handling state manually register will keep track of all of this by passing method to handlesubmit().
-    const {error,setError} =useState("");
+    const [error,setError] =useState("");
     const login=async (data)=>{
-      // setError("");
+      setError("");
+      console.log(data);//---------------------------------->check this in console log to understand react hook form<----------------------------------.
      try {
        const session=await authservice.login(data);//this will create session of log in user with sessionid,expiration-time,etc..
        if(session){
@@ -53,9 +54,10 @@ function Login() {
                      <Input
                      label="E-mail: "
                      type="email"
-                     placeplaceholder="Enter your email address"
-                     {...register('email',{
-                            required:true,
+                     placeplaceholder="Enter your email address"//this is not accepted in input component but due to ...props this are spreaded.
+                     {...register('email',{//keep email(key) as unique for each Input tag.This name will be used as the key in the form data object. 
+                      //use data.email to access this input field filled data in login();      
+                      required:true,
                             validate: {
                                 matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
                                 "Email address must be a valid address",
@@ -67,7 +69,7 @@ function Login() {
                      type="password"
                      label="password"
                      placeplaceholder="Enter your password"
-                     {...register('password',{
+                     {...register('psswrd',{
                         required:true,
                      })}
                      />

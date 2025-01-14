@@ -1,6 +1,6 @@
 import confi from "../confi/confi.js"
 import { ID, Client, Databases, Storage,Query } from "appwrite"
-export class storage {
+ class storage {
   client = new Client();
   database;
   bucket;
@@ -13,12 +13,12 @@ export class storage {
   }
 
   //Posts services using DataBase Only.
-  async createpost({ title, slug, content, featuredImage, status, userId }) {//slug is used as id and  is image id o be recognised from storage.
+  async createpost({ title, slug, content, featuredImage, status, userId }) {//slug is used as id and  featuredimage id to be recognised from storage.
     try {
       return await this.database.createDocument( //In appwrite/docs/database/document
         confi.databaseid, 
         confi.collectionid,
-        slug,  //used as document-id.
+        slug,  //used as document-id of post And featuredImage is image id in storage(Bucket)
         {
           title, content, featuredimage:featuredImage, status, userid:userId
         }
@@ -31,10 +31,9 @@ export class storage {
   }
 
   async updatePost(slug, { title, content, featuredimage, status, userid }) {
-    console.log(status)
+    
     try {
-      status=status=="active"?true:false;
-      console.log("updated: ",status)
+     
       return await this.database.updateDocument(
         confi.databaseid,
         confi.collectionid,
@@ -77,7 +76,7 @@ export class storage {
     }
   }
 
-  async getposts(queries = [Query.equal("status", "active")]) {//status and active is key value pair created by us.
+  async getposts(queries = [Query.equal("status", true)]) {//status and true is key value pair created by us in indexes.
     try {
       return await this.database.listDocuments(
         confi.databaseid,
@@ -90,7 +89,7 @@ export class storage {
     }
   }
 
-  //File services using Storage Only.
+  //File services using Storage Only(Buckets).
   async uploadfile(file){
     try {
       return await this.bucket.createFile(
@@ -104,11 +103,11 @@ export class storage {
     }
   }
 
-  async deleteFile(fileid){
+  async deleteFile(fileId){
     try{
      await this.bucket.deleteFile(
       confi.bucketid,
-      fileid,
+      fileId,
     )
       return true;
   }
@@ -119,7 +118,7 @@ export class storage {
   }
 
   getFilePreview(fileid){
-    return this.bucket.getFilePreview(
+    return this.bucket.getFilePreview(//this generates url which can be used in img tag and other similar tags using url's.
       confi.bucketid,
       fileid,
     )

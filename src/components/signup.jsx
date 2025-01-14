@@ -12,11 +12,11 @@ function Signup() {
   const {register,handleSubmit}=useForm();
   //  console.log("Reached in signup page")
     const create= async (data)=>{
+      console.log(data)
        setError("")
        try {
          const data2=await authservice.createAccount(data)
          if(data2){
-
           const user=await authservice.getcurrentuser()//calling get currentuser because after creating account automatically it is loggedin
           if(user) dispatch(login(user));
          navigate('/')
@@ -48,7 +48,7 @@ function Signup() {
                        <Input
                         label="Full-name"
                         placeholder='Enter your full name'
-                        {...register('name',{
+                        {...register('nom',{
                           required:true,
                         })}
                        />

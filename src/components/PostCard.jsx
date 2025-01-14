@@ -1,6 +1,10 @@
 import React from 'react'
 import storage from '../appwrite/storage_service'
 import {Link} from 'react-router-dom'
+
+//Small previews of each posts as component is generated here and used in /all-posts page.
+
+
 function PostCard({$id,title,featuredimage}) {//$id($ is required) is id for whole post and featured image is id for image.
   return (
     <Link to={`/post/${$id}`}>

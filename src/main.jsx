@@ -13,7 +13,6 @@ import EditPost from "./pages/editPost.jsx";
 import Post from "./pages/post.jsx";
 import AllPosts from "./pages/Allposts.jsx";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,7 +20,7 @@ const router = createBrowserRouter([
     children: [
         {
             path: "/",
-            element: <Home />,
+            element: <Home />, 
         },
         {
             path: "/login",
@@ -77,7 +76,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   < Provider store={store}>
+    {/* provider for redux tool-kit and RouterProvider for react-router-dom in substitution to <App /> */}
+   < Provider store={store} >
     <RouterProvider router={router} />
     </Provider>
   </StrictMode>

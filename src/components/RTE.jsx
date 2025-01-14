@@ -1,15 +1,15 @@
 import React from 'react'
-import {Controller} from 'react-hook-form'//used for handling uncontrolled Editor component for sending reference and manage states.
+import {Controller} from 'react-hook-form'//used for handling uncontrolled Editor component for sending reference and manage states(comes form same library from where forwardRef() hook comes).
 import {Editor} from '@tinymce/tinymce-react'//Reach text editor wrap inside Controller for handling reference.
-function RTE({name,control,label,defaultval=""}) {
+function RTE({name,control,label,defaultval=""}) {//control is attribute form parent component which dexides where to pass state(from component to form) when submitted.
   return (
     <div  className='w-full' >
         {label && <label className='inline-block mb-1 pl-1' >{label}</label> }
     
     <Controller
     name={name || 'content'}
-    control={control}
-    render={({field:{onChange}})=>(    //Arrow fucntion is assigned
+    control={control}     //passing all control and states to parent component
+    render={            ( {field:{onChange}} )  => (    //Arrow function is assigned
      <Editor
      intialValue={defaultval}
      init={{

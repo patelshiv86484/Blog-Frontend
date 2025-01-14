@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 function postForm({post}) {
-    const {register,handleSubmit,watch,setValue,control,getValues}=useForm({
+    const {register,handleSubmit   ,watch,control,setValue,getValues}=useForm({
       defaultValues:{
         title: post?.title||"",
         slug: post?.$id||"",
@@ -17,9 +17,10 @@ function postForm({post}) {
 
     const navigate=useNavigate()
     const userData=useSelector((state)=>state.auth.userData);
+
     const submit=async (data)=>{ 
         if(post){//if post aleady exist.
-              const file=data.image[0] ? await appwriteService.uploadfile(data.image[0]):null //newly generated post
+              const file=data.image[0] ? await appwriteService.uploadfile(data.image[0]):null //newly generated post image is uploaded.
                if(file){
                 appwriteService.deleteFile(post.featuredImage);
                }
@@ -37,8 +38,7 @@ function postForm({post}) {
          if(file){
           const fileId=file.$id;
           data.featuredImage=fileId;
-          // console.log(userData)
-          const dbPost=await appwriteService.createpost({...data,userId:userData.userdata.$id,status:userData.status});
+          const dbPost=await appwriteService.createpost({...data,userId:userData.userdata.$id,status:userData.userdata.status});
           if(dbPost){
             navigate(`/post/${dbPost.$id}`);
           }
@@ -58,15 +58,17 @@ function postForm({post}) {
 
     },[])
 
-    React.useEffect(()=>{
+    React.useEffect(()=>{//    senior interview level question
       const subscription=watch((value,{name})=>{
             if(name==='title'){
+              console.log(value)
+              console.log(name)
               setValue("slug",slugTransform(value.title),{shouldValidate:true});
             }
       })
 
-      return ()=> subscription.unsubscribe();
-    },[watch,slugTransform,setValue])
+      return ()=> subscription.unsubscribe();//  .unsubscribe is attached to any function in useEffect to avoid infinite looping condition.
+    },[watch,slugTransform,setValue])//watch attached to title input.
     
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -82,7 +84,7 @@ function postForm({post}) {
                     placeholder="Slug"
                     className="mb-4"
                     {...register("slug", { required: true })}
-                    onInput={(e) => {
+                    onInput={(e) => {//onInput is an eventhandler it is trigered on changing input values.
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />

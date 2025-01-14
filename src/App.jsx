@@ -11,7 +11,7 @@ function App() {
   const disp=useDispatch();
   
   useEffect(() => {
-   authservice.getcurrentuser().
+   authservice.getcurrentuser().//if refreshing or coming back to website without logout will loginus again by storing our session.
    then((userdata)=>{
       if(userdata) disp(login({userdata}));
       else disp(logout())
