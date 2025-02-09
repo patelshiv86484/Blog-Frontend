@@ -17,7 +17,6 @@ function PostForm({post}) {
 
     const navigate=useNavigate()
     const userData=useSelector((state)=>state.auth.userData);
-
     const submit=async (data)=>{ 
         if(post){//if post aleady exist.
               const file=data.image[0] ? await appwriteService.uploadfile(data.image[0]):null //newly generated post image is uploaded.
@@ -87,7 +86,8 @@ function PostForm({post}) {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content") || ""} />
+               
             </div>
             <div className="w-1/3 px-2">
                 <Input
@@ -99,7 +99,6 @@ function PostForm({post}) {
                 />
                 {post && (
                     <div className="w-full mb-4">
-                      console.log(post)
                         <img
                             src={appwriteService.getFilePreview(post.featuredimage)}
                             alt={post.title}

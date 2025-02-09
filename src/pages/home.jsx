@@ -26,16 +26,18 @@ function home() {
     </div>
      )
     }
+    
+    console.log(post)
     return (
         <div className='w-full py-8'>
             <Container>
                 <div className='flex flex-wrap'>
-                    {post.map((post) => (
-                        <div key={post.$id} className='p-2 w-1/4'>
+                    {post.map((post) => 
+                       {return  <div key={post.$id} className='p-2 w-1/4'>
                             <PostCard {...post} />
                             {/* or <PostCard  post={post} /> */}
-                        </div>
-                    ))}
+                        </div>}
+                    )}
                 </div>
             </Container>
         </div>

@@ -31,7 +31,7 @@ import { ID, Client, Databases, Storage,Query } from "appwrite"
   }
 
   async updatePost(slug, { title, content, featuredimage, status, userid }) {
-    
+    status=(status=="active");
     try {
      
       return await this.database.updateDocument(

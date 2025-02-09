@@ -11,6 +11,7 @@ function RTE({name,control,label,defaultval=""}) {//control is attribute form pa
     control={control}     //passing all control and states to parent component
     render={            ( {field:{onChange}} )  => (    //Arrow function is assigned
      <Editor
+     apiKey='25j31g20dhy9g55b7529s07i61lzh3i1kkyy2h5w9zztsc3c'
      intialValue={defaultval}
      init={{
         initialValue: defaultval,
