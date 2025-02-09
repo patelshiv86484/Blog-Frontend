@@ -5,7 +5,7 @@ import appwriteService from '../../appwrite/storage_service'
 import {useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-function postForm({post}) {
+function PostForm({post}) {
     const {register,handleSubmit   ,watch,control,setValue,getValues}=useForm({
       defaultValues:{
         title: post?.title||"",
@@ -62,8 +62,7 @@ function postForm({post}) {
       const subscription=watch((value,{name})=>{
             if(name==='title'){
               console.log(value)
-              console.log(name)
-              setValue("slug",slugTransform(value.title),{shouldValidate:true});
+              setValue("slug",slugTransform(value.title),{shouldValidate:true});//value.title as consist of all input fields data in value
             }
       })
 
@@ -100,6 +99,7 @@ function postForm({post}) {
                 />
                 {post && (
                     <div className="w-full mb-4">
+                      console.log(post)
                         <img
                             src={appwriteService.getFilePreview(post.featuredimage)}
                             alt={post.title}
@@ -113,6 +113,7 @@ function postForm({post}) {
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
+                
                 <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
                     {post ? "Update" : "Submit"}
                 </Button>
@@ -121,4 +122,4 @@ function postForm({post}) {
   )
 }
 
-export default postForm
+export default PostForm
