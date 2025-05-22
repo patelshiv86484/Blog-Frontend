@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react'
 import {useDispatch} from "react-redux"
-import authservice from './appwrite/auth_service'
+import {createAccount,LoginDB,getcurrentuser,LogoutDB} from './database/auth_service.js'
 import {login,logout} from "./store/authslice"
 import {Header,Footer} from  "./components/index"//here if  /index  is not written then also it works correctly.
 import {Outlet} from "react-router-dom"
@@ -11,9 +11,10 @@ function App() {
   const disp=useDispatch();
   
   useEffect(() => {
-   authservice.getcurrentuser().//if refreshing or coming back to website without logout will loginus again by storing our session.
+   getcurrentuser().//if refreshing or coming back to website without logout will loginus again by storing our session.
    then((userdata)=>{
-      if(userdata) disp(login({userdata}));
+    console.log(userdata.data.data)
+      if(userdata) disp(login(userdata.data.data));
       else disp(logout())
    })
    .finally(()=>{

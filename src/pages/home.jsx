@@ -1,13 +1,13 @@
 import React,{useState,useEffect} from 'react'
-import appwriteservice from '../appwrite/storage_service'
+import  {createpost,getFilePreview,deleteFile,uploadfile,getposts,getpost,deletepost,updatePost} from '../database/storage_service'
 import { PostCard,Container } from '../components'
 
 function home() {
     const [post,setPost]=useState([])
     useEffect(()=>{
-       appwriteservice.getposts().then((posts)=>{
+       getposts().then((posts)=>{
         if(posts){
-            setPost(posts.documents)
+            setPost(posts.data)
         }
        })
     },[])
@@ -27,20 +27,9 @@ function home() {
      )
     }
     
-    console.log(post)
     return (
-        <div className='w-full py-8'>
-            <Container>
-                <div className='flex flex-wrap'>
-                    {post.map((post) => 
-                       {return  <div key={post.$id} className='p-2 w-1/4'>
-                            <PostCard {...post} />
-                            {/* or <PostCard  post={post} /> */}
-                        </div>}
-                    )}
-                </div>
-            </Container>
-        </div>
+      <>
+      </>
     )
 }
 

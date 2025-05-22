@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import authservice from '../appwrite/auth_service'
+import {createAccount,LoginDB,getcurrentuser,LogoutDB} from '../database/auth_service'
 import {Link,useNavigate} from 'react-router-dom'
 import {login}  from '../store/authslice'
 import {Button,Logo,Input} from './index'
@@ -11,13 +11,14 @@ function Signup() {
   const [error,setError]=useState('')
   const {register,handleSubmit}=useForm();
   //  console.log("Reached in signup page")
+
     const create= async (data)=>{
       console.log(data)
        setError("")
        try {
-         const data2=await authservice.createAccount(data)
+         const data2=await createAccount(data)
          if(data2){
-          const user=await authservice.getcurrentuser()//calling get currentuser because after creating account automatically it is loggedin
+          const user=await getcurrentuser()//calling get currentuser because after creating account automatically it is loggedin
           if(user) dispatch(login(user));
          navigate('/')
          }
@@ -46,16 +47,16 @@ function Signup() {
                 <form onSubmit={handleSubmit(create)}>
                     <div className='space-y-5'>
                        <Input
-                        label="Full-name"
+                        label="userName"
                         placeholder='Enter your full name'
-                        {...register('nom',{
+                        {...register('userName',{
                           required:true,
                         })}
                        />
 
                        <Input 
                        label="E-mail"
-                       placeholder='ENter your email address'
+                       placeholder='Enter your email address'
                        type='email'
                        {...register('email',{
                         required:true,

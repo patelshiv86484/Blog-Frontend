@@ -1,6 +1,6 @@
 import React ,{useEffect,useState} from 'react'
 import {Container,PostForm} from '../components'
-import appwriteservice from '../appwrite/storage_service'
+import  {createpost,getFilePreview,deleteFile,uploadfile,getposts,getpost,deletepost,updatePost} from '../database/storage_service'
 import { useNavigate,useParams } from 'react-router-dom'
 function editPost() {
  const [post,setPost] =useState(null);
@@ -9,9 +9,9 @@ function editPost() {
 
  useEffect(()=>{
     if(slug){
-        appwriteservice.getpost(slug).then(postes=>{//error in this  by owner
+        getpost(slug).then(postes=>{//error in this  by owner
             if(postes){
-              setPost(postes);//main here is error
+              setPost(postes.data);//main here is error
             } 
         })
     }

@@ -1,15 +1,15 @@
 import React from 'react'
 import {useDispatch} from 'react-redux'
 import {logout} from '../../store/authslice'
-import authservice from '../../appwrite/auth_service'
+import {createAccount,LoginDB,getcurrentuser,LogoutDB} from '../../database/auth_service.js'
 function Logoutbtn() {
   
     const disp=useDispatch();
 
     function handlelogout(){
-        authservice.logout().
+        LogoutDB().
         then(()=>{
-        disp(logout())//if successfully logout from appwrite then only logout from store.
+        disp(logout())//if successfully logout from database then only logout from store.
         })
     }
   return (

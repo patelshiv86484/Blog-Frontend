@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux'
 import Btn from './btn'
 import Logo from './logo'
 import {useForm} from 'react-hook-form'//          IMPORTANT.
-import authservice from '../appwrite/auth_service'
+import {createAccount,LoginDB,getcurrentuser,LogoutDB} from '../database/auth_service.js'
 import Input from './input';
 function Login() {
     const navigate=useNavigate();
@@ -14,13 +14,13 @@ function Login() {
     const [error,setError] =useState("");
     const login=async (data)=>{
       setError("");
-      console.log(data);//---------------------------------->check this in console log to understand react hook form<----------------------------------.
+      //console.log(data);//---------------------------------->check this in console log to understand react hook form<----------------------------------.
      try {
-       const session=await authservice.login(data);//this will create session of log in user with sessionid,expiration-time,etc..
+       const session=await LoginDB(data);//this will create session of log in user with sessionid,expiration-time,etc..
        if(session){
-         const userdata= await authservice.getcurrentuser();//this will give active user from exitign session.
+         const userdata= await getcurrentuser();//this will give active user from exitign session.
          if(userdata){
-            dispatch(authlogin(userdata));
+            dispatch(authlogin(userdata.data));
             navigate('/');
          }
        }
