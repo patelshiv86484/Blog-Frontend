@@ -12,7 +12,7 @@ import axios from "axios";
     formData.append("image", data.image[0]);  // FileList -> single file
   }
     try {
-      const getteddata= await axios.post('/api/images/upload-image',formData,{
+      const getteddata= await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/images/upload-image`,formData,{
        withCredentials: true,
      } )
      return getteddata.data
@@ -35,7 +35,7 @@ import axios from "axios";
     formData.append("image", image[0]);  // FileList -> single file
   }
     try {
-      const getteddata= await axios.patch(`/api/images/edit-image/${slug}`,formData,{
+      const getteddata= await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/api/images/edit-image/${slug}`,formData,{
         withCredentials: true,
       })
       return getteddata.data;
@@ -47,7 +47,9 @@ import axios from "axios";
 
   async function deletepost(slug) {
     try {
-      await axios.post(`/api/images/delete-image/${slug}`)
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/images/delete-image/${slug}`,{},{
+        withCredentials:true,
+      })
       return true;
     }
     catch (error) {
@@ -57,7 +59,7 @@ import axios from "axios";
 
   async function getpost(slug) {
     try {
-      const getteddata= await axios.get(`/api/images/get-image/${slug}`,{
+      const getteddata= await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/images/get-image/${slug}`,{
         withCredentials: true,
       })
       return getteddata.data
@@ -69,7 +71,7 @@ import axios from "axios";
 
   async function getposts() {//status and true is key value pair created by us in indexes.
     try {
-      const getteddata=await axios.get('/api/images/posts',{
+      const getteddata=await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/images/posts`,{
        withCredentials: true,
       })
       return getteddata.data;
